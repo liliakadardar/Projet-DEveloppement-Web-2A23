@@ -1,0 +1,7 @@
+<?php 
+include "../model/Utilisateur.php"
+include "../controller/UtilisateurC.php"
+$UtilisateurC=new UtilisateurC(); 
+$listeUsers=$UtilisateurC->supprimerUtilisateurs();
+
+?>
