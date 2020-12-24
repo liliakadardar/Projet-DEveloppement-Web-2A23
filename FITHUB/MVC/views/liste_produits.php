@@ -41,7 +41,7 @@
                         <?php
                           
                           foreach ($listeProduit as $row) {?>
-            <tr>
+                             <tr>
                       
                                 <td>
                               <img src="images/<?php echo $row['chemin_img']; ?>" >

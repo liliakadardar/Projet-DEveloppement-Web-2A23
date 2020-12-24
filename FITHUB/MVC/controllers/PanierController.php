@@ -53,7 +53,22 @@
             }
         }
 
-
+public function addQuantity($id_panier,$quantite) {
+            try {
+                $pdo = getConnexion();
+                $query = $pdo->prepare(
+                    'UPDATE panier SET quantite = :quantite WHERE id_panier = :id_panier'
+                );
+                $query->execute([
+                    'id_panier' => $id_panier,
+                    'quantite' => $quantite 
+                ]);
+                print_r($query);
+                return $query->fetch();
+            } catch (PDOException $e) {
+                $e->getMessage();
+            }
+        }
 
         public function deleteProduitPanier($id_panier) {
             try {

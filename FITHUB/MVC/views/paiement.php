@@ -31,9 +31,7 @@
       </h4>
       <ul class="list-group mb-3">
         <li class="list-group-item d-flex justify-content-between lh-condensed">
-          <?php foreach($liste as $pack){?>
-                <?php 
-                     $liste = $packC->getPackById($pack["id_pack"]);
+         
           <div>
             <h6 class="my-0">Nom produit</h6>
             <small class="text-muted">Brief description</small>
