@@ -1,0 +1,1 @@
+le fichier dmc.sq c'est notre base de donnée nommée dmc

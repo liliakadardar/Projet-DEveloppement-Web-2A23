@@ -9,6 +9,38 @@ include("header.php");
        // print_r($liste);
 
         ?>
+        <style>
+#articles {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#articles td {
+  border: 1px solid #ddd;
+  padding: 8px;
+
+}
+#articles th{
+
+text-align: center;
+
+}
+#articles tr:nth-child(even){background-color: #f2f2f2;}
+
+ #articles th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  
+
+}
+
+#img_article{
+  height: 150px;
+  width: 150px;
+}
+</style>  
  <!-- ===========================
     =====>> Page Hero <<===== -->
     <section id="page-hero" class="about-bg">
@@ -24,55 +56,61 @@ include("header.php");
     </section>
     <!-- =====>> End Page Hero <<===== 
     =========================== -->
-
 <section>
 
   <!--Grid row-->
-
+  <div class="row">
 
     <!--Grid column-->
     <div class="col-lg-8">
+
       <!-- Card -->
       <div class="mb-3">
         <div class="pt-4 wish-list">
 
-          <h3 class="mb-3 text-muted text-uppercase mb">Panier</h3>( Articles)
+      <h4 class="mb-3 text-muted text-uppercase medium">Article</h4>
+     <table id="articles">
+                <!--<thead>
+                  <th>
+                  </th>
+              
+                  <th><h3 class="mb-3 text-muted text-uppercase small">QUANTITE</h3></th>
+                   <th><h3 class="mb-3 text-muted text-uppercase small">PRIX</h3></th>
 
-    
+                  <th><h3 class="mb-3 text-muted text-uppercase small">SOUS-TOTAL</h3></th>
+
+                </thead>-->
+                 <tbody>
           <?php foreach($liste as $produit){ 
               $result = $produitC->getProduitById($produit['reference_produit']);
-             
                     // $result = $produitC->getProduitById(1);
                      //ou peut etre par reference?
             ?>
-           
-              
-          <div class="row mb-4">
-            
-            <div class="col-md-5 col-lg-3 col-xl-3">
-              <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
-    
-      <img class="img-fluid w-100" src="images/<?php echo $result['chemin_img']; ?>" >
-              </div>
-            </div>
+         
+             
+    <tr>
+      <td>  
 
-            <div class="col-md-7 col-lg-9 col-xl-9">
-              <div>
-                <div class="d-flex justify-content-between">
-                 
-                  <div>
-                    <h3><?php echo $result["nom"] ?></h3><br> 
-                    <p class="mb-3 text-muted text-uppercase small">Reference :<?php echo $result["reference"] ?></p>
-                  </div>
-                  <div>
+      <img src="images/<?php echo $result['chemin_img'];?>" id='img_article'></td>
+         <td>     
+      <h3><?php echo $result["nom"] ?></h3><br> 
+      <p class="mb-3 text-muted text-uppercase small">Reference :<?php echo $result["reference"] ?>
+      </p>
 
-                
-<p class="mb-0"><span><strong id="summary">
+<a href="suppPanier.php?id=<?php echo $produit['id_panier']; ?>" type="button" class="card-link-secondary small text-uppercase mr-3"><i class="fas fa-trash-alt mr-1"></i> Supprimer </a>
+
+      </td>
+
+
+
+<td>
+  <p class="mb-0"><span><strong id="summary">
                  QUANTITE:
                 </strong></span></p class="mb-0">
-      <select name="quantite" onchange="updateQuantite(this)">
-
-        <option selected value="<?php echo $produit["quantite"] ?>"><?php echo $produit["quantite"] ?></option>
+  <select name="quantite" onchange="updateQuantite(this,$produit['id_panier'])">
+    <!--  <select name="quantite" onchange="updateQuantite(this)"> -->
+        <option selected value="<?php echo $produit["quantite"] ?>">
+          <?php echo $produit["quantite"] ?></option>
         <?php
         for ($i = 1; $i <= 10; $i++) {
           if(!($i == $produit["quantite"])){
@@ -83,50 +121,41 @@ include("header.php");
     
       }}
       ?>
-</select>
+</select><br> <br> <br> 
 
-            <p class="mb-0">
-                    <span><br><br>
-                      <strong id="summary">
-                    PRIX: <?php echo $produit["prix_produit"] ?> /dt
-                  </strong>
-                  </span>
-                  </p class="mb-0">
-                    
-                  </div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
+<p class="mb-0"><span><strong id="summary">
+                PRIX: 
+                
+ <?php echo $produit["prix_produit"] ?>/dt</strong></span></p class="mb-0"> 
+</td>
+         
+
                   
+          </tr>
 
-                    <a href="suppPanier.php?id=<?php echo $produit['id_panier']; ?>" type="button" class="card-link-secondary small text-uppercase mr-3"><i class="fas fa-trash-alt mr-1"></i> Supprimer </a>
-                    
-              
-                  
-                </div>
-              </div>
-              </div>
-            </div>
-          </div>
-
-          <hr class="mb-4">
           <?php } ?>
 
-    
+                </tbody>
+</table>
+
         </div>
       </div>
+     
 
-  
+      
+    </div>
+    <!--Grid column-->
 
     <!--Grid column-->
     <div class="col-lg-4">
 
       <!-- Card -->
-      <div class="mb-3" >
+      <div class="mb-3">
         <div class="pt-4">
 
-          <h5 class="mb-3">TOTAL : </h5>
+         <h5 class="mb-3" >TOTAL : </h5>
 
-          <ul class="list-group list-group-flush">
+          <ul class="list-group list-group-flush" >
             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
               Montant:
               <?php
@@ -156,18 +185,50 @@ include("header.php");
              
             </li>
 
+<li>
+ <strong>
+  <p class="mb-0">Frais de livraison non inclus pour ce montant</p>
+  </strong>
+
+
+</li>
+      </div>
+
           </ul>
-
-          <button type="button" class="btn btn-dark btn-lg btn-block" >Finaliser l'achat</button>
-
+<br>
+  <a href="paiement.php" class="btn btn-7 btn-lg btn-block" >COMMANDER</a>
+  <a href="liste_produits.php" class="btn btn-3 btn-lg btn-block">Poursuivre vos achats</a>
         </div>
       </div>
-      
+      <!-- Card 
+      <div class="mb-3">
+        <div class="pt-4">
 
-    </div>
+          <a class="dark-grey-text d-flex justify-content-between" data-toggle="collapse" href="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+            Ajouter un Code promo (optional)
+            <span><i class="fas fa-chevron-down pt-1"></i></span>
+          </a>
+
+          <div class="collapse" id="collapseExample">
+            <div class="mt-3">
+              <div class="md-form md-outline mb-0">
+                <input type="text" id="discount-code" class="form-control font-weight-light"
+                  placeholder="Enter discount code">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+-->
+
+      <!-- Card -->
+
+   
     <!--Grid column-->
-
-  
+ 
+ 
   <!--Grid row -->
 
 </section>
@@ -179,7 +240,7 @@ include("footer.php"); ?>
 <script>
 function updateQuantite(selected) {
   var value = selected.value;  
-  var mo='<?PHP echo $produit["id_panier"];?>';
+  var mo='<?PHP //echo $produit["id_panier"];?>';
  // var mo = panier.value;  
 
   console.log(value);
@@ -189,3 +250,15 @@ function updateQuantite(selected) {
 
 }
 </script>
+/*
+function updateQuantite(selected,panier) {
+  var value = selected.value;  
+  var mo=panier.value;
+ // var mo = panier.value;  
+
+  console.log(value);
+    console.log(panier);
+
+  window.location="updateQuantity.php?quantite="+ value + "&id_panier="+ panier  ;
+
+}*/
