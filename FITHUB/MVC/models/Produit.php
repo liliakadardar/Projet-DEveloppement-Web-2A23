@@ -1,18 +1,20 @@
 
 <?php
-	
+	/**
+	* 
+	*/
 	class Produit
 	{
-		private $id_produit=NULL; 
-		private $reference;
-		private $nom;
-		private $quantite_total;
-		private $prix;
-		private $chemin_img;
+		public $reference;
+		public $nom;
+		public $quantite_total;
+		public $prix;
+		public $chemin_img;
 		private $description;
 		private $reference_sous_categorie;
-		
-		function __construct($reference,$nom,$quantite_total,$prix,$chemin_img,$description)
+		private $idCat;
+
+		function __construct($reference,$nom,$quantite_total,$prix,$chemin_img,$description,$idCat)
 		{
 			$this->reference=$reference;
 			$this->nom=$nom;
@@ -20,47 +22,54 @@
 			$this->prix=$prix;
 			$this->chemin_img=$chemin_img;
 			$this->description=$description;
+			$this->idCat=$idCat;
 			
 		}
 
-		public function getReference(){
+		function getReference(){
 			return $this->reference;
 		}
-		public function getNom(){
+		function getNom(){
 			return $this->nom;
 		}
-		public function getQuantite_total(){
+		function getQuantite_total(){
 			return $this->quantite_total;
 		}
-		public function getPrix(){
+		function getPrix(){
 			return $this->prix;
 		}
-		public function getChemin_img(){
+		function getChemin_img(){
 			return $this->chemin_img;
 		}
-		public function getDescription(){
+		function getDescription(){
 			return $this->description;
 		}
-		
+		function getIdCat(){
+			return $this->idCat;
+		}
 
-		public function setReference($reference){
+		function setReference($reference){
 			$this->reference=$reference;
 		}
-		public function setNom($nom){
+		function setNom($nom){
 			$this->nom=$nom;
 		}
-		public function setQuantite_total($quantite_total){
+		function setQuantite_total($quantite_total){
 			$this->quantite_total=$quantite_total;
 		}
-		public function setPrix($prix){
+		function setPrix($prix){
 			$this->prix=$prix;
 		}
-		public function setChemin_img($chemin_img){
+		function setChemin_img($chemin_img){
 			$this->chemin_img=$chemin_img;
 		}
-		public function setDescription($description){
+		function setDescription($description){
 			$this->description=$description;
 		}
+		function setIdCat($idCat){
+			$this->idCat=$idCat;
+		}
+		
 		
 	}
 
