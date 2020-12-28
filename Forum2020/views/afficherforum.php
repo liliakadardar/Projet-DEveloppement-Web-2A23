@@ -362,7 +362,51 @@ foreach($listeforum as $row){
           
 
               </form>
-			  
+			  <!-----------------------------------------------STATISTIQUES------------------------------------------------------->
+			  <?php  
+ $connect = mysqli_connect("localhost", "root", "", "dmc");  
+ $query = "SELECT topic, count(*) as number FROM serv GROUP BY topic";  
+ $result = mysqli_query($connect, $query);  
+ ?>  
+  
+
+           <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>  
+           <script type="text/javascript">  
+           google.charts.load('current', {'packages':['corechart']});  
+           google.charts.setOnLoadCallback(drawChart);  
+           function drawChart()  
+           {  
+                var data = google.visualization.arrayToDataTable([  
+                          ['topic', 'Number'],  
+                          <?php  
+                          while($row = mysqli_fetch_array($result))  
+                          {  
+                               echo "['".$row["topic"]."', ".$row["number"]."],";  
+                          }  
+                          ?>  
+                     ]);  
+                var options = {  
+                      title: 'Les Topics Les Plus Discutée',  
+                      //is3D:true,  
+                      pieHole: 0.4  
+                     };  
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));  
+                chart.draw(data, options);  
+           }  
+           </script>  
+ 
+           <br /><br />  
+           <div style="width:900px;">  
+                <h3 align="center">Nos Statisques Concernant Les Topics Les Plus en Discutes</h3>  
+                <br />  
+               <center> <div id="piechart" style="width: 900px; height: 500px;"></div>  </center>
+           </div>  
+
+
+
+
+
+			  <!------------------------------------------------END STAT-------------------------------------------------------->
 			    <div class="col-lg-12 pl-12">
                     <div class="blog-widget-right">
                         <form class="form-inline blog-widget-search">

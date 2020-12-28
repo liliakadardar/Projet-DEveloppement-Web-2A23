@@ -1,54 +1,62 @@
 <?php
-	require_once __DIR__ .'/config.php';
-	//include"../config.php";
-	include "../models/Produit.php";
 
+class config {
+    private static $pdo = NULL;
 
+    public static function getConnexion() {
+      if (!isset(self::$pdo)) {
+        try{
+          self::$pdo = new PDO('mysql:host=localhost;dbname=projet', 'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+          
+        }catch(Exception $e){
+          die('Erreur: '.$e->getMessage());
+        }
+      }
+      return self::$pdo;
+    }
+  }
+
+	/**
+	* 
+	*/
 	class produitC
 	{
-		public function getProduitById($id_produit) {
-            try {
-                $pdo = getConnexion();
-                $query = $pdo->prepare(
-                    'SELECT * FROM produit WHERE id_produit = :id_produit'
-                );
-                $query->execute([
-                    'id_produit' => $id_produit
-                ]);
-                return $query->fetch();
-            } catch (PDOException $e) {
-                $e->getMessage();
-            }
-        }
-
-			public function afficherproduit()
-		{
-			$pdo= getConnexion();
-			$sql="SELECT * FROM produit ";
-			$liste=$pdo->query($sql);
-			return $liste;
-			
-		}
-
-
-
-		public function ajouter($produit){
+		
+		function ajouter($produit){
 			$db = config::getConnexion();
-			$sql = "INSERT INTO produit (reference,nom,quantite_total,prix,description,chemin_img) VALUES (:reference,:nom,:quantite_total,:prix,:description,:chemin_img)";
-			$req = $db->prepare($sql);
+			$sql = "INSERT INTO produit (?,?,?,?,?,?,?) VALUES (:reference,:nom,:prix,:chemin_img,:quantite_total,:description, :idCat)";
+			try {
+				$req = $db->prepare($sql);
 			$req->bindValue(':reference',$produit->getReference());
 			$req->bindValue(':nom',$produit->getNom());
 			$req->bindValue(':quantite_total',$produit->getQuantite_total());
 			$req->bindValue(':prix',$produit->getPrix());
 			$req->bindValue(':description',$produit->getDescription());
 			$req->bindValue(':chemin_img',$produit->getChemin_img());
+			$req->bindValue(':idCat',$produit->getIdCat());
 			$req->execute();
+		}
+		catch (Exception $e){
+				echo 'Erreur: '.$e->getMessage();
+			}			
 
-		}			
+		}
 
-	
 
-		/*function recuperer($reference_sous_categorie){
+		/*
+		
+				function afficherJoinedcategorie(){
+			$db = config::getConnexion();
+			$sql="SELECT categorie.idCat, medecin.prenom, categorie.nom, categorie.description, categorie.chemin_img, categorie.date FROM categorie INNER JOIN medecin ON categorie.idM=medecin.idM";
+			$liste=$db->query($sql);
+			return $liste;
+			
+		}
+		
+		
+		
+		
+		function recuperer($reference_sous_categorie){
 			$db = config::getConnexion();
 			$sql = "SELECT reference FROM produit WHERE reference_sous_categorie = $reference_sous_categorie";
 			$liste=$db->query($sql);
@@ -68,10 +76,16 @@
 			$sql="SElECT reference,nom,chemin_img FROM produit";
 			$liste=$db->query($sql);
 			return $liste;
+		}*/
+
+		function afficherproduit(){
+			$db = config::getConnexion();
+			$sql="SELECT * FROM produit ";
+			$liste=$db->query($sql);
+			return $liste;
+			
 		}
 
-		*/
-/*
 		function supprimerproduit($reference){
 			$db = config::getConnexion();
 			$sql="DELETE FROM produit where reference= :reference";
@@ -83,6 +97,7 @@
 
 		function modifierproduit($produit,$reference){
 			$db = config::getConnexion();
+			
 			$sql="UPDATE produit SET nom=:nom,quantite_total=:quantite_total,prix=:prix,description=:description WHERE reference=:reference";
 			try{
 				$req=$db->prepare($sql);
@@ -113,10 +128,9 @@
 			catch (Exception $e){
 				die('Erreur: '.$e->getMessage());
 			}
-		}*/
-
-
-		/*function afficherproduitseloncategorie($catalogue){
+		}
+/*
+		function afficherproduitseloncategorie($catalogue){
 			$db = config::getConnexion();
 			$sql="SElECT * FROM produit WHERE nomCatalogue=:catalogue";
 			$req=$db->prepare($sql);
