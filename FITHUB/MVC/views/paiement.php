@@ -4,15 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FITHUB</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel=icon href=iconFit.png type="png">
 
-
- <? php include '../Controllers/PackController.php'; 
- $packC =  new PackC();
-        $liste = $packC->ListePackC();
-?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  
     </head>
 
 <body>
@@ -194,7 +191,9 @@
           </div>
         </div>
         <hr class="mb-4">
-        <button id="payer-btn" class="btn btn-primary btn-lg btn-block" type="submit">Payer</button>
+        <!--<button id="payer-btn" class="btn btn-primary btn-lg btn-block" type="submit">Payer</button>-->
+        <div id="paypal-payment-button">
+                        </div> 
       </form>
     </div>
   </div>
@@ -202,15 +201,48 @@
   <footer class="my-5 pt-5 text-muted text-center text-small">
     <p class="mb-1">&copy; 2020-2021 FitHub</p>
     <ul class="list-inline">
-      <li class="list-inline-item"><a href="#">Privacy</a></li>
-      <li class="list-inline-item"><a href="#">Terms</a></li>
+      <li class="list-inline-item"><a href="#">Privé</a></li>
+      <li class="list-inline-item"><a href="#">Termes</a></li>
       <li class="list-inline-item"><a href="#">Support</a></li>
     </ul>
   </footer>
 </div>
+  
 
+
+ <script src="https://www.paypal.com/sdk/js?client-id=AaJMejIDjhumOr48XsycjfvQegxAku1dHdrA0DNfkqFSg7bFFkpJTnnwyaLIGUFsPijWx1g51gxp9F-5&currency=USD" data-namespace="paypal_sdk"></script>
+
+    <script type="text/javascript">
+  
+paypal_sdk.Buttons({
+    style : {
+        color: 'blue',
+        shape: 'pill'
+    },
+    createOrder: function (data, actions) {
+        return actions.order.create({
+            purchase_units : [{
+                amount: {
+                    value: '0.1'
+                }
+            }]
+        });
+    },
+    onApprove: function (data, actions) {
+        return actions.order.capture().then(function (details) {
+            console.log(details)
+            window.location.replace("success.php")
+        })
+    },
+    onCancel: function (data) {
+        window.location.replace("Oncancel.php")
+    }
+}).render('#paypal-payment-button');
+</script>
+ 
 <script src="assets/js/jquery-3.3.1.min.js"></script>
 <script src="assets/js/mvc.js" type="text/javascript"></script>
+
 
 </body>
 </html>
