@@ -1,3 +1,4 @@
+
 <?php
 
 class config {
@@ -18,6 +19,8 @@ class config {
 
 	/**
 	* 
+	
+		
 	*/
 	class produitC
 	{
@@ -43,15 +46,38 @@ class config {
 		}
 
 
-		/*
-		
-				function afficherJoinedcategorie(){
+		function afficherJoinedcategorie(){
 			$db = config::getConnexion();
-			$sql="SELECT categorie.idCat, medecin.prenom, categorie.nom, categorie.description, categorie.chemin_img, categorie.date FROM categorie INNER JOIN medecin ON categorie.idM=medecin.idM";
+			$sql="SELECT produit.reference, categorie.nom as nomC, produit.nom, produit.quantite_total, produit.prix, produit.description, produit.chemin_img FROM produit INNER JOIN categorie ON categorie.idCat=produit.idCat";
 			$liste=$db->query($sql);
 			return $liste;
 			
 		}
+	
+		
+	
+	
+		
+		function aaficherPrice(){
+			$min = 100;
+            $max = 300;
+			if (! empty($_POST['min_price'])) {
+				$min = $_POST['min_price'];
+			}
+			
+			if (! empty($_POST['max_price'])) {
+				$max = $_POST['max_price'];
+			}
+			$db = config::getConnexion();
+			$sql=	"select * from produit where prix BETWEEN '$min' AND '$max'";
+			$liste=$db->query($sql);
+			return $liste;
+			
+		}
+		
+
+		/*
+		
 		
 		
 		
