@@ -196,7 +196,7 @@ text-align: center;
 
           </ul>
 <br>
-  <a href="paiement.php" class="btn btn-7 btn-lg btn-block" >COMMANDER</a>
+  <a href="PayPanier.php" class="btn btn-7 btn-lg btn-block" >COMMANDER</a>
   <a href="liste_produits.php" class="btn btn-3 btn-lg btn-block">Poursuivre vos achats</a>
         </div>
       </div>

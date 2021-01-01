@@ -94,7 +94,7 @@
                                         <?php echo $pack['description_pack']; ?></p>
                                 </ul><br> <br> <br>
 
-                                <a href="paiement.php" class="btn btn-4">Je m'inscris</a>
+                                <a href="PayPack.php" class="btn btn-4">Je m'inscris</a>
                                
                             </div>
                         </div>
