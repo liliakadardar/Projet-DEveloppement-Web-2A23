@@ -7,7 +7,7 @@
               print_r($promo);
               $promoC->updatePromo($promo,$_POST['id_promo']);
               print_r($promoC);
-             header('Location:../showPromos.php');
+             header('Location:../affichePromos.php');
         }
 
 ?>

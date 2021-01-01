@@ -8,8 +8,8 @@
               $pack = new Pack($_POST['nom_pack'],$_POST['description_pack'],$_POST['prix_pack']);
               print_r($pack);
               $packC->addPackC($pack);
-              echo "haha";
-             header('Location:../showPacks.php');
+              //echo "haha";
+             header('Location:../affichePack.php');
         }
 
 ?>

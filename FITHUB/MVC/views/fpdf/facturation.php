@@ -43,6 +43,14 @@ function entete_table($position_entete) {
 	$pdf->Ln(); // Retour à la ligne
 }
 
+
+ include'../../controllers/PanierController.php';
+     include '../../controllers/ProduitController.php';
+
+$panierC = new panierC();
+$produitC = new produitC(); 
+$liste = $panierC->ListePanierC();
+
 $position_entete = 70;
 // police des caractères
 $pdf->SetFont('Helvetica','',9);
@@ -51,23 +59,29 @@ $pdf->SetTextColor(0);
 entete_table($position_entete);
 $position_detail = 78; // Position ordonnée = $position_entete+hauteur de la cellule d'en-tête (60+8)
 
+
+
+ foreach($liste as $produit){ 
+    $result = $produitC->getProduitById($produit['reference_produit']);
+                  
+           
 	// position abcisse de la colonne 1 (10mm du bord)
 	$pdf->SetY($position_detail);
 	$pdf->SetX(10);
-	$pdf->MultiCell(60,8,"bonj",1,'C');
+	$pdf->MultiCell(60,8,'echo $produit["nom"]',1,'C');
     // position abcisse de la colonne 2 (70 = 10 + 60)	
 	$pdf->SetY($position_detail);
 	$pdf->SetX(70); 
-	$pdf->MultiCell(60,8,"our",1,'C');
+	$pdf->MultiCell(60,8,'echo $produit["quantite"]',1,'C');
 	// position abcisse de la colonne 3 (130 = 70+ 60)
 	$pdf->SetY($position_detail);
 	$pdf->SetX(130); 
-	$pdf->MultiCell(30,8,"lol",1,'C');
+	$pdf->MultiCell(30,8,' $produit["prix_produit"]',1,'C');
 
 	// on incrémente la position ordonnée de la ligne suivante (+8mm = hauteur des cellules)	
 	$position_detail += 8; 
 
-
+}
 
 
 $pdf->Output();

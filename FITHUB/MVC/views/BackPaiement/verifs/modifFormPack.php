@@ -7,7 +7,7 @@
               print_r($pack);
               $packC->updatePack($pack,$_POST['id_pack']);
               //echo "haha";
-             header('Location:../showPacks.php');
+             header('Location:../affichePack.php');
         }
 
 ?>
